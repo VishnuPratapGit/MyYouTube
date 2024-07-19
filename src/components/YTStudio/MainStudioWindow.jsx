@@ -106,7 +106,7 @@ const MainStudioWindow = () => {
 
                                 <td className="whitespace-nowrap p-2 px-4">
                                     <div className="text-sm text-center text-gray-900 dark:text-white">
-                                        {video.visibility.replace(/\b\w/g, char => char.toUpperCase())}
+                                        {video.visibility.charAt(0).toUpperCase() + video.visibility.slice(1)}
                                     </div>
                                 </td>
 
