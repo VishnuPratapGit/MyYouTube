@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import databaseServices from "../../appwrite/database";
+import { useSelector } from "react-redux";
+import { Query } from "appwrite";
+import { Link } from "react-router-dom";
 
 const MainStudioWindow = () => {
+    const userId = useSelector(state => state.auth.userData?.$id);
     const [documents, setDocuments] = useState([]);
 
     useEffect(() => {
-        databaseServices.getPosts()
+        databaseServices.getPosts([Query.equal("userId", userId)])
             .then(response => {
                 if (response) {
                     setDocuments(response.documents);
@@ -20,7 +24,7 @@ const MainStudioWindow = () => {
 
     return (
         <section id="studio-table" className="flex flex-col font-roboto mx-auto w-full h-full p-4">
-            <div className="mx-10">
+            {/* <div className="mx-10">
                 <div className="mb-4 font-roboto">
                     <h1 className="text-2xl p-1 font-semibold">Channel Content</h1>
                     <div className="flex gap-10 text-sm p-1 text-gray-700 dark:text-neutral-300">
@@ -30,7 +34,7 @@ const MainStudioWindow = () => {
                         <h1>Live</h1>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <div className="flex-1 overflow-y-auto font-roboto scrollbar px-10">
                 <table className="w-full divide-gray-200 shadow-lg">
@@ -78,10 +82,7 @@ const MainStudioWindow = () => {
 
                     <tbody className="dark:bg-neutral-900">
                         {documents.map((video) => (
-                            <tr
-                                key={video.$id}
-                                className="border-b dark:border-neutral-700"
-                            >
+                            <tr key={video.$id} className="border-b dark:border-neutral-700">
                                 <td className="whitespace-nowrap p-2 px-4">
                                     <div className="flex w-max overflow-hidden">
                                         {/* image */}
@@ -94,9 +95,9 @@ const MainStudioWindow = () => {
                                         </div>
                                         {/* video-details */}
                                         <div className="ml-4 max-w-[20rem]">
-                                            <div className="text-sm text-gray-900 font-semibold dark:text-white">
+                                            <Link to={`updatepost/${video.$id}`} className="text-sm text-gray-900 font-semibold dark:text-white">
                                                 {video.title}
-                                            </div>
+                                            </Link>
                                             <div className="text-xs text-gray-700 dark:text-neutral-400 truncate">
                                                 {video.description}
                                             </div>
@@ -104,8 +105,8 @@ const MainStudioWindow = () => {
                                     </div>
                                 </td>
 
-                                <td className="whitespace-nowrap p-2 px-4">
-                                    <div className="text-sm text-center text-gray-900 dark:text-white">
+                                <td className="whitespace-nowrap p-2 px-5">
+                                    <div className={`text-sm font-semibold py-1 rounded-2xl text-center text-black ${video.visibility === 'public' ? 'bg-emerald-400' : video.visibility === 'unlisted' ? 'bg-yellow-200' : 'bg-rose-500'}`}>
                                         {video.visibility.charAt(0).toUpperCase() + video.visibility.slice(1)}
                                     </div>
                                 </td>

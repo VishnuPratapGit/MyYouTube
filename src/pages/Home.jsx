@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { VideoCard } from '../components/index'
 import databaseServices from '../appwrite/database'
+import { Query } from 'appwrite'
 
 const Home = () => {
     const [documents, setDocuments] = useState([]);
 
     useEffect(() => {
-        databaseServices.getPosts()
+        databaseServices.getPosts([Query.equal("visibility", "public")])
             .then(response => {
                 if (response) {
                     setDocuments(response.documents);

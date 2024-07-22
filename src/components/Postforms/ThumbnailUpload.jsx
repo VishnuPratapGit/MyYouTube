@@ -1,9 +1,11 @@
-import { forwardRef, useId } from 'react'
-import { ImagePlus } from "lucide-react";
+import { forwardRef, useId, useRef } from 'react'
+import { ImagePlus, SquarePen } from "lucide-react";
 import databaseServices from '../../appwrite/database'
+import PreLoader from '../PreLoader';
 
-const ThumbnailUpload = ({ thumbnailData = null, error = false, ...props }, ref) => {
+const ThumbnailUpload = ({ loading = false, thumbnailData = null, error = false, ...props }, ref) => {
     const id = useId()
+
     return (
         <div className="font-roboto form-group">
             <h1 >Thumbnail</h1>
@@ -13,19 +15,24 @@ const ThumbnailUpload = ({ thumbnailData = null, error = false, ...props }, ref)
             </h1>
 
             {thumbnailData ? (
-                <div>
-                    <img src={databaseServices.getThumbnailPreview(thumbnailData.$id)} alt="Uploaded Thumbnail" className="mt-3 w-40 h-20 border border-dashed dark:border-neutral-500 border-neutral-300 p-0.5"
+                <div className='thumbnail-img relative w-max'>
+                    <img src={databaseServices.getThumbnailPreview(thumbnailData.$id)} alt="error" className="mt-3 w-40 h-20 border border-dashed dark:border-neutral-500 border-neutral-300 p-0.5"
                     />
+                    <label htmlFor={id} className='thumbnail-edit-icon absolute top-1 right-1 bg-slate-800'><SquarePen size={20} /></label>
                 </div>
             ) : (
                 <label
                     htmlFor={id}
                     className={`flex flex-col justify-center items-center border border-dashed w-40 h-20 ${error ? "border-red-500" : "dark:border-neutral-500 border-neutral-300"})}`}
                 >
-                    <ImagePlus />
-                    <span className="text-xs text-stone-400 mt-2">
-                        Upload File
-                    </span>
+                    {loading ? <PreLoader type="bars" color="gray" /> : (
+                        <>
+                            <ImagePlus />
+                            <span className="text-xs text-stone-400 mt-2">
+                                Upload File
+                            </span>
+                        </>
+                    )}
                 </label>
             )}
 

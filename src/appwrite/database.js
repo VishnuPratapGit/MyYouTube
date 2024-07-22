@@ -29,19 +29,20 @@ class DatabaseServices {
         }
     }
 
-    async updateVideoPost(postid, { title, description, thumbnail, audience, visibility, videourl, userId, channelName }) {
+    async updateVideoPost(postid, data) {
         try {
             return await this.databases.updateDocument(
                 config.appwriteDatabaseId,
                 config.appwriteCollectionId,
                 postid,
-                { title, description, thumbnail, audience, visibility, videourl, userId, channelName }
+                data
             );
         } catch (error) {
-            console.log("Appwrite databaseServices :: updatePost :: error: ", error.message);
+            console.log("Appwrite databaseServices :: updatePost :: error:", error.message);
             throw error;
         }
     }
+
 
     async deleteVideoPost(postid) {
         try {
@@ -70,7 +71,7 @@ class DatabaseServices {
         }
     }
 
-    async getPosts(queries = [Query.equal("visibility", "public")]) {
+    async getPosts(queries = []) {
         try {
             return await this.databases.listDocuments(
                 config.appwriteDatabaseId,
@@ -106,7 +107,19 @@ class DatabaseServices {
             );
             return true;
         } catch (error) {
-            console.log("Appwrite service :: deleteFile :: error", error.message);
+            console.log("Appwrite service :: deleteVideo :: error", error.message);
+            return false;
+        }
+    }
+
+    async getFileData(fileId) {
+        try {
+            return await this.storage.getFile(
+                config.appwriteBucketId,
+                fileId
+            );
+        } catch (error) {
+            console.log("Appwrite service :: getFileData :: error", error.message);
             return false;
         }
     }

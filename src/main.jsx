@@ -7,7 +7,7 @@ import store from "./redux/store.js";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { Home, Login, MainVideo, Signup, YTStudio } from "./pages/pageIndex.js";
+import { Home, Login, MainVideo, Signup, UpdateVideo, YTStudio } from "./pages/pageIndex.js";
 import { AuthWrapper } from "./components/index.js";
 
 const router = createBrowserRouter([
@@ -48,6 +48,14 @@ const router = createBrowserRouter([
         element: (
           <AuthWrapper>
             <MainVideo />
+          </AuthWrapper>
+        )
+      },
+      {
+        path: "studio/updatepost/:videoId",
+        element: (
+          <AuthWrapper>
+            <UpdateVideo />
           </AuthWrapper>
         )
       },
