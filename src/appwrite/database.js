@@ -99,7 +99,7 @@ class DatabaseServices {
         }
     }
 
-    async deleteVideo(fileId) {
+    async deleteStorageFile(fileId) {
         try {
             await this.storage.deleteFile(
                 config.appwriteBucketId,

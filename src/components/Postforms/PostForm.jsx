@@ -25,21 +25,32 @@ const PostForm = ({ edit = false, toggleCreate, post }) => {
     // THUMBNAIL UPLOAD
     useEffect(() => {
         const thumbnailUpload = async () => {
+            if (!window.confirm("Press OK if you want to proceed")) {
+                return
+            }
             setThumbnailLoader(true);
             const thumbnailUploadData = await databaseServices.uploadFile(thumbnailList[0]);
+
             if (thumbnailUploadData) {
-                setThumbnailData(thumbnailUploadData);
-                setThumbnailLoader(false);
+                if (post) {
+                    const thumbnailUpdate = await databaseServices.updateVideoPost(post.$id, { thumbnailId: thumbnailUploadData.$id });
+                    if (thumbnailUpdate && thumbnailData) await databaseServices.deleteStorageFile(thumbnailData.$id);
+                    alert("Thumbnail Updated.");
+                }
+                setThumbnailData(thumbnailUploadData)
+            } else {
+                alert("Thumbnail not uploaded properly!")
             }
-            else alert("Thumbnail not uploaded properly!");
+            setThumbnailLoader(false);
         }
-        if (thumbnailList && thumbnailList.length > 0) thumbnailUpload();
+        if (thumbnailList?.length > 0) thumbnailUpload();
     }, [thumbnailList]);
 
     useEffect(() => {
         if (post) {
             databaseServices.getFileData(post.videoId)
                 .then(video => setVideoData(video))
+
             databaseServices.getFileData(post.thumbnailId)
                 .then(thumbnailData => setThumbnailData(thumbnailData))
 
@@ -74,6 +85,7 @@ const PostForm = ({ edit = false, toggleCreate, post }) => {
             const newPostUpdatedData = {
                 title: data.title,
                 description: data.description,
+                thumbnailId: thumbnailData.$id,
                 visibility: data.visibility,
                 audience: data.audience === "true",
             };
@@ -119,7 +131,6 @@ const PostForm = ({ edit = false, toggleCreate, post }) => {
             setAddDetails(true);
         }
     };
-
 
     // MEMOIZED VIDEO COMPONENT
     const VideoComponent = useMemo(() => (

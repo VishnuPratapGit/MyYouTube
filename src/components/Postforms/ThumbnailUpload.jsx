@@ -15,9 +15,10 @@ const ThumbnailUpload = ({ loading = false, thumbnailData = null, error = false,
             </h1>
 
             {thumbnailData ? (
-                <div className='thumbnail-img relative w-max'>
-                    <img src={databaseServices.getThumbnailPreview(thumbnailData.$id)} alt="error" className="mt-3 w-40 h-20 border border-dashed dark:border-neutral-500 border-neutral-300 p-0.5"
+                <div className='flex thumbnail-img relative w-max'>
+                    <img src={databaseServices.getThumbnailPreview(thumbnailData.$id)} alt="error" className="w-40 h-20 border border-dashed dark:border-neutral-500 border-neutral-300 p-0.5"
                     />
+                    {loading && <PreLoader className='absolute left-1/2 -translate-x-1/2 self-center' color="gray" />}
                     <label htmlFor={id} className='thumbnail-edit-icon absolute top-1 right-1 bg-slate-800'><SquarePen size={20} /></label>
                 </div>
             ) : (
@@ -25,7 +26,7 @@ const ThumbnailUpload = ({ loading = false, thumbnailData = null, error = false,
                     htmlFor={id}
                     className={`flex flex-col justify-center items-center border border-dashed w-40 h-20 ${error ? "border-red-500" : "dark:border-neutral-500 border-neutral-300"})}`}
                 >
-                    {loading ? <PreLoader type="bars" color="gray" /> : (
+                    {loading ? <PreLoader color="gray" /> : (
                         <>
                             <ImagePlus />
                             <span className="text-xs text-stone-400 mt-2">
