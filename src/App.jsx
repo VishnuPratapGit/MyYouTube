@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Header, PreLoader, Sidebar, StudioSidebar } from "./components/index";
 import AddVideo from "./pages/AddVideo";
 import { Outlet, useLocation } from "react-router-dom";
@@ -61,11 +61,8 @@ const App = () => {
       </nav>
 
       <div>
-        <aside
-          className={`fixed z-10 w-min transition-transform duration-500 ${isSibarOpen ? "translate-x-0" : "-translate-x-full"
-            }`}
-        >
-          {studio ? <StudioSidebar /> : <Sidebar />}
+        <aside className={`fixed z-10 w-min transition-transform duration-500 ${isSibarOpen ? "translate-x-0" : "-translate-x-full"}`}
+        >{studio ? <StudioSidebar /> : <Sidebar />}
         </aside>
 
         <main className="h-[90svh] overflow-y-scroll">

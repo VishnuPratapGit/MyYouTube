@@ -19,6 +19,7 @@ const VideoCard = ({ title, thumbnailId, videoId, channelName, views, $createdAt
 
     const handleMouseEnter = () => {
         if (videoRef.current && isVideoReady && videoRef.current.readyState >= 2) {
+            videoRef.current.style.opacity = "1";
             videoRef.current.play();
             mutebtnRef.current.style.opacity = "1";
         }
@@ -29,6 +30,7 @@ const VideoCard = ({ title, thumbnailId, videoId, channelName, views, $createdAt
             if (!videoRef.current.paused) {
                 videoRef.current.pause();
             }
+            videoRef.current.style.opacity = "0";
             mutebtnRef.current.style.opacity = "0";
             videoRef.current.currentTime = 0;
         }
@@ -42,14 +44,18 @@ const VideoCard = ({ title, thumbnailId, videoId, channelName, views, $createdAt
     };
 
     return (
-        <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='relative'>
+        <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='relative h-max'>
             <Link to={`/video/${videoId}`} className=''>
                 <div className='w-full h-min mb-5 overflow-hidden bg-red transition-all duration-500 sm:rounded-xl hover:rounded-none'>
 
-                    <div id='homepage-video' className='w-full hover:rounded-none rounded-xl overflow-hidden'>
+                    <div
+                        id='homepage-video'
+                        className='w-full hover:rounded-none rounded-xl overflow-hidden'
+                        style={{ backgroundImage: `url(${databaseServices.getThumbnailPreview(thumbnailId)})` }}
+                    >
                         <video
                             ref={videoRef}
-                            className='w-full h-56 sm:h-52 object-contain bg-neutral-600'
+                            className='w-full opacity-0 h-56 sm:h-52 object-contain bg-neutral-600'
                             src={databaseServices.getFilePreview(videoId)}
                             muted
                         ></video>
@@ -74,7 +80,6 @@ const VideoCard = ({ title, thumbnailId, videoId, channelName, views, $createdAt
                             </div>
                         </div>
                     </div>
-
                 </div>
             </Link>
 
@@ -82,7 +87,7 @@ const VideoCard = ({ title, thumbnailId, videoId, channelName, views, $createdAt
                 ref={mutebtnRef}
                 className='opacity-0 flex items-center justify-center absolute p-1 text-2xl transition-all duration-300 bg-black top-2 right-2 bg-opacity-50 rounded-full'
                 onClick={toggleMute}
-            >  🔇
+            >🔇
             </button>
         </div>
 

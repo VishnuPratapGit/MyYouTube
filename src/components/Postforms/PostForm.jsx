@@ -7,6 +7,7 @@ import databaseServices from "../../appwrite/database";
 import VideoUpload from "./VideoUpload";
 import ThumbnailUpload from "./ThumbnailUpload";
 import SelectVisibility from "./SelectVisibility";
+import VideoSection from "./VideoSection";
 
 
 const PostForm = ({ edit = false, toggleCreate, post }) => {
@@ -35,7 +36,6 @@ const PostForm = ({ edit = false, toggleCreate, post }) => {
                 if (post) {
                     const thumbnailUpdate = await databaseServices.updateVideoPost(post.$id, { thumbnailId: thumbnailUploadData.$id });
                     if (thumbnailUpdate && thumbnailData) await databaseServices.deleteStorageFile(thumbnailData.$id);
-                    alert("Thumbnail Updated.");
                 }
                 setThumbnailData(thumbnailUploadData)
             } else {
@@ -132,14 +132,7 @@ const PostForm = ({ edit = false, toggleCreate, post }) => {
         }
     };
 
-    // MEMOIZED VIDEO COMPONENT
-    const VideoComponent = useMemo(() => (
-        <video
-            className='w-full min-h-44 h-1/2 object-cover rounded-t-lg'
-            src={databaseServices.getFilePreview(videoData ? videoData.$id : null)}
-            controls
-        ></video>
-    ), [videoData]);
+
 
 
     return (
@@ -150,7 +143,9 @@ const PostForm = ({ edit = false, toggleCreate, post }) => {
                     {!edit && <X onClick={toggleCreate} className="cursor-pointer" />}
                 </div>
                 <div className="flex items-center flex-1 overflow-y-scroll">
-                    {(addDetails && !edit) ? <VideoUpload handleVideoUpload={handleVideoUpload} /> : (
+                    {(addDetails && !edit) ? (
+                        <VideoUpload handleVideoUpload={handleVideoUpload} />
+                    ) : (
                         <div className={`flex w-full p-5 ${edit && "pt-0"} px-12 h-full gap-10 font-roboto`}>
                             <form onSubmit={handleSubmit(submitForm)} className="scroll-hidden overflow-y-scroll w-3/5 min-w-80">
                                 <Input
@@ -210,23 +205,7 @@ const PostForm = ({ edit = false, toggleCreate, post }) => {
                                 </button>
                             </form>
                             <div id="video-info" className="flex-1">
-                                <div className={`bg-neutral-900 rounded-lg w-full ${edit && "max-w-full h-full"} max-w-80 h-3/4 relative`}>
-
-                                    {videoLoader && <div className="absolute flex justify-center items-center z-10 w-full h-1/2 bg-red-50"><PreLoader color="gray" /></div>}
-
-                                    {VideoComponent}
-
-                                    <div className="p-5 pb-2">
-                                        <span className="text-xs block font-semibold text-neutral-500">Video Link</span>
-                                        <a href={databaseServices.getFilePreview(videoData ? videoData.$id : null)} className="text-sm truncate block text-blue-400">{videoData ? `https://cloud.appwrite.io/v1/${videoData.$id}` : <PreLoader type="bubbles" />}
-                                        </a>
-                                    </div>
-
-                                    <div className="p-5 pt-2">
-                                        <span className="text-xs font-semibold text-neutral-500">File Name</span>
-                                        <h1>{videoData ? videoData.name : <PreLoader type="bubbles" />}</h1>
-                                    </div>
-                                </div>
+                                <VideoSection edit={edit} videoLoader={videoLoader} videoData={videoData} />
                             </div>
                         </div>
                     )}

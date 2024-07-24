@@ -71,8 +71,9 @@ class DatabaseServices {
         }
     }
 
-    async getPosts(queries = []) {
+    async getPosts(queries = [], limit = 8, offset = 0) {
         try {
+            queries.push(Query.limit(limit), Query.offset(offset))
             return await this.databases.listDocuments(
                 config.appwriteDatabaseId,
                 config.appwriteCollectionId,
