@@ -1,21 +1,50 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import databaseServices from "../../appwrite/database";
 import { useSelector } from "react-redux";
 import { Query } from "appwrite";
 import { Link } from "react-router-dom";
+import { throttle } from "lodash";
 
 const MainStudioWindow = () => {
     const userId = useSelector(state => state.auth.userData?.$id);
     const [documents, setDocuments] = useState([]);
+    const [page, setPage] = useState(0);
+    const [fetching, setFetching] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
+    const scrollableRef = useRef(null);
+    const limit = 8;
+
+    const handleScroll = useCallback(throttle(() => {
+        const { scrollTop, scrollHeight, clientHeight } = scrollableRef.current;
+
+        if (scrollTop + clientHeight >= scrollHeight - 10 && !fetching && hasMore) {
+            console.log('Near the bottom!');
+            setPage(prevPage => prevPage + 1);
+        }
+    }, 300), [hasMore, fetching]);
 
     useEffect(() => {
-        databaseServices.getPosts([Query.equal("userId", userId)])
+        const element = scrollableRef.current;
+        element.addEventListener('scroll', handleScroll);
+
+        return () => {
+            element.removeEventListener('scroll', handleScroll);
+        };
+    }, [handleScroll])
+
+    useEffect(() => {
+        setFetching(true);
+        const offset = page * limit;
+        hasMore && databaseServices.getPosts([Query.equal("userId", userId)], limit, offset)
             .then(response => {
-                if (response) {
-                    setDocuments(response.documents);
+                if (response.documents.length > 0) {
+                    setDocuments(prevVideos => [...prevVideos, ...response.documents]);
+                    setFetching(false);
+                } else {
+                    setHasMore(false);
                 }
             })
-    }, []);
+    }, [page]);
 
     function dateFormatChange(createdAt) {
         const event = new Date(createdAt)
@@ -24,19 +53,7 @@ const MainStudioWindow = () => {
 
     return (
         <section id="studio-table" className="flex flex-col font-roboto mx-auto w-full h-full p-4">
-            {/* <div className="mx-10">
-                <div className="mb-4 font-roboto">
-                    <h1 className="text-2xl p-1 font-semibold">Channel Content</h1>
-                    <div className="flex gap-10 text-sm p-1 text-gray-700 dark:text-neutral-300">
-                        <h1 className="border-b-2 border-b-blue-500">Videos</h1>
-                        <h1>Shorts</h1>
-                        <h1>Playlist</h1>
-                        <h1>Live</h1>
-                    </div>
-                </div>
-            </div> */}
-
-            <div className="flex-1 overflow-y-auto font-roboto scrollbar px-10">
+            <div ref={scrollableRef} className="flex-1 overflow-y-auto font-roboto scrollbar px-10">
                 <table className="w-full divide-gray-200 shadow-lg">
                     <thead className="sticky top-0 shadow-md dark:shadow-sm dark:shadow-neutral-600 bg-gray-50 dark:bg-neutral-800">
                         <tr>

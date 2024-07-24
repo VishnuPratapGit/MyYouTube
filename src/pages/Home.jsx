@@ -35,7 +35,7 @@ const Home = () => {
             setLoading(true);
             try {
                 console.log(page);
-                const offset = (page) * (limit - 1);
+                const offset = page * limit;
                 const response = await databaseServices.getPosts([Query.equal("visibility", "public")], limit, offset);
                 if (response.documents.length > 0) {
                     setVideos(prevVideos => [...prevVideos, ...response.documents]);
