@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import databaseServices from '../appwrite/database';
 import { VideoCard } from '../components/index';
 import { Query } from 'appwrite';
+import { throttle } from 'lodash';
 
 const Home = () => {
     const [videos, setVideos] = useState([]);
@@ -9,16 +10,16 @@ const Home = () => {
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const mainRef = useRef(null);
-    const limit = 10;
+    const limit = 8;
 
-    const handleScroll = useCallback(() => {
+    const handleScroll = useCallback(throttle(() => {
         const { scrollTop, scrollHeight, clientHeight } = mainRef.current;
 
         if (scrollTop + clientHeight >= scrollHeight - 10 && !loading && hasMore) {
             console.log('Near the bottom!');
             setPage(prevPage => prevPage + 1);
         }
-    }, [loading, hasMore]);
+    }, 300), [loading, hasMore]);
 
     useEffect(() => {
         const mainElement = mainRef.current;

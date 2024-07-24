@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.2.6",
     "appwrite": "^15.0.0",
     "date-fns": "^3.6.0",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.408.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
