@@ -14,7 +14,7 @@ const VideoSection = ({ edit, videoLoader, videoData }) => {
     ), [videoData]);
 
     return (
-        <div className={`bg-neutral-900 rounded-lg w-full ${edit && "max-w-full h-min"} sm:h-3/4 relative`}>
+        <div className={`bg-neutral-900 rounded-lg w-full ${edit && "max-w-full min-w-80 h-min"} sm:h-3/4 relative`}>
 
             {videoLoader && <div className="absolute flex justify-center items-center z-10 w-full h-1/2 "><PreLoader color="gray" /></div>}
 

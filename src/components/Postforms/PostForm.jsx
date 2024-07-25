@@ -146,7 +146,7 @@ const PostForm = ({ edit = false, toggleCreate, post }) => {
                     {(addDetails && !edit) ? (
                         <VideoUpload handleVideoUpload={handleVideoUpload} />
                     ) : (
-                        <div className={`flex sm:flex-row flex-col-reverse w-full p-5 ${edit && "pt-0"} px-12 h-full gap-10 font-roboto overflow-y-auto`}>
+                        <div className={`flex sm:flex-row flex-col-reverse w-full p-5 ${edit && "pt-0"} px-12 h-full gap-10 font-roboto overflow-y-auto overflow-x-hidden`}>
                             <form onSubmit={handleSubmit(submitForm)} className="scroll-hidden sm:overflow-y-scroll w-full sm:w-3/5 min-w-80">
                                 <Input
                                     className={"border-[0.5px] focus:border-2 border-neutral-300 dark:border-neutral-600 mb-4 h-12 pl-4"}
