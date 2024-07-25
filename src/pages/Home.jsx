@@ -53,7 +53,7 @@ const Home = () => {
     }, [page]);
 
     return (
-        <div ref={mainRef} className='grid grid-cols-1 h-full overflow-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4'>
+        <div ref={mainRef} className='grid grid-cols-1 h-full overflow-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:p-4 py-4'>
             {videos.map((videoData) => (
                 <VideoCard key={videoData.$id} {...videoData} />
             ))}

@@ -28,3 +28,11 @@
 .scroll-hidden::-webkit-scrollbar {
     display: none;
 }
+
+.scroll-visible::-webkit-scrollbar {
+    display: block;
+}
+
+.h-scroll-hidden::-webkit-scrollbar:horizontal {
+    display: none;
+}

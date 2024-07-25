@@ -12,7 +12,7 @@ const Header = ({ toggleSidebar, isSidebarOpen, studio, toggleCreate }) => {
     const navigate = useNavigate();
 
     return (
-        <div className="flex lg:h-[10svh] justify-between gap-2 items-center border-b border-stone-800 px-8">
+        <div className="flex sm:h-[10svh] h-[5vh] justify-between gap-2 items-center sm:border-b border-stone-800 px-4 sm:px-8">
             <div className="flex items-center gap-3 md:gap-5">
                 {isSidebarOpen ? (
                     <IoCloseSharp
@@ -34,7 +34,7 @@ const Header = ({ toggleSidebar, isSidebarOpen, studio, toggleCreate }) => {
 
             {studio ? (
                 <div onClick={toggleCreate} className="flex items-center gap-2 md:gap-5">
-                    <Button className="flex items-center gap-1 dark:bg-neutral-600">
+                    <Button className="flex items-center gap-1 sm:dark:bg-neutral-600 bg-transparent">
                         <BiSolidVideoPlus className="md:text-xl lg:text-2xl" />
                         <h2 className="font-roboto font-semibold">Create</h2>
                     </Button>

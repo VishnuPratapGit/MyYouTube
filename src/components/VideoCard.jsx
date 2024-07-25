@@ -50,7 +50,7 @@ const VideoCard = ({ title, thumbnailId, videoId, channelName, views, $createdAt
 
                     <div
                         id='homepage-video'
-                        className='w-full hover:rounded-none rounded-xl overflow-hidden'
+                        className='w-full hover:rounded-none sm:rounded-xl overflow-hidden'
                         style={{ backgroundImage: `url(${databaseServices.getThumbnailPreview(thumbnailId)})` }}
                     >
                         <video
@@ -61,7 +61,7 @@ const VideoCard = ({ title, thumbnailId, videoId, channelName, views, $createdAt
                         ></video>
                     </div>
 
-                    <div className="flex font-roboto pt-4 rounded-b-lg max-w-md">
+                    <div className="flex font-roboto pt-4 pl-4 rounded-b-lg">
                         <div className="flex-shrink-0">
                             <div className="bg-gray-800 rounded-full p-2">
                                 <CheckCircle className="text-white" />
@@ -72,8 +72,11 @@ const VideoCard = ({ title, thumbnailId, videoId, channelName, views, $createdAt
                             <div className="font-semibold text-md line-clamp-2">
                                 {title}
                             </div>
-                            <div className="text-neutral-400">
+                            <div className="sm:block flex text-neutral-400">
                                 <span>{channelName}</span>
+                                <span className='sm:hidden flex items-center'>
+                                    <Dot size={17} strokeWidth={4} />
+                                </span>
                                 <div className='flex items-center text-sm'>
                                     {views} view <Dot size={17} strokeWidth={4} /> {formattedDate}
                                 </div>

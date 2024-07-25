@@ -137,7 +137,7 @@ const PostForm = ({ edit = false, toggleCreate, post }) => {
 
     return (
         <div id="outerbox" className={`flex ${edit ? "relative" : "absolute"} top-0 h-full w-full justify-center items-center border-dashed bgtransparent`}>
-            <div id="innerbox" className={`flex flex-col ${edit ? "w-full h-full rounded-none dark:bg-stone-950" : "w-[62%] h-[86%] rounded-3xl dark:bg-neutral-800"} shadow-2xl bg-white `}>
+            <div id="innerbox" className={`flex flex-col ${edit ? "w-full h-full rounded-none dark:bg-stone-950" : "sm:w-[62%] h-[86%] w-full mx-5 sm:mx-0 rounded-3xl dark:bg-neutral-800"} shadow-2xl bg-white `}>
                 <div className={`flex justify-between p-5 pl-8 border-b ${edit ? "border-none pl-12 rounded-none" : " rounded-t-3xl"} border-slate-200 dark:border-neutral-700`}>
                     <h1 className="text-xl font-roboto font-semibold">Video-Details</h1>
                     {!edit && <X onClick={toggleCreate} className="cursor-pointer" />}
@@ -146,8 +146,8 @@ const PostForm = ({ edit = false, toggleCreate, post }) => {
                     {(addDetails && !edit) ? (
                         <VideoUpload handleVideoUpload={handleVideoUpload} />
                     ) : (
-                        <div className={`flex w-full p-5 ${edit && "pt-0"} px-12 h-full gap-10 font-roboto`}>
-                            <form onSubmit={handleSubmit(submitForm)} className="scroll-hidden overflow-y-scroll w-3/5 min-w-80">
+                        <div className={`flex sm:flex-row flex-col-reverse w-full p-5 ${edit && "pt-0"} px-12 h-full gap-10 font-roboto overflow-y-auto`}>
+                            <form onSubmit={handleSubmit(submitForm)} className="scroll-hidden sm:overflow-y-scroll w-full sm:w-3/5 min-w-80">
                                 <Input
                                     className={"border-[0.5px] focus:border-2 border-neutral-300 dark:border-neutral-600 mb-4 h-12 pl-4"}
                                     placeholder="Title*"
@@ -200,7 +200,7 @@ const PostForm = ({ edit = false, toggleCreate, post }) => {
 
                                 <button
                                     type="submit"
-                                    className="p-2 bg-green-800 text-white font-roboto font-semibold rounded-md"
+                                    className="p-2 w-full bg-green-800 text-white font-roboto font-semibold rounded-md"
                                 > Upload Video
                                 </button>
                             </form>
