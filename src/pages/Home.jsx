@@ -16,7 +16,7 @@ const Home = () => {
         const { scrollTop, scrollHeight, clientHeight } = mainRef.current;
 
         if (scrollTop + clientHeight >= scrollHeight - 10 && !loading && hasMore) {
-            console.log('Near the bottom!');
+            // console.log('Near the bottom!');
             setPage(prevPage => prevPage + 1);
         }
     }, 300), [loading, hasMore]);
@@ -57,7 +57,7 @@ const Home = () => {
             {videos.map((videoData) => (
                 <VideoCard key={videoData.$id} {...videoData} />
             ))}
-            {loading && <div>Loading more videos...</div>}
+            {loading && <div>Loading videos...</div>}
         </div>
     );
 };

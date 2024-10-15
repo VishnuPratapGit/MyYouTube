@@ -43,12 +43,18 @@ const Header = ({ toggleSidebar, isSidebarOpen, studio, toggleCreate }) => {
             ) : (
                 authStatus ? (
                     <div className="flex items-center gap-2 md:gap-5">
-                        <BiSolidVideoPlus
-                            className="cursor-pointer md:text-xl lg:text-2xl"
-                            onClick={() => navigate("/studio")}
-                        />
-                        <IoNotifications className="cursor-pointer md:text-xl lg:text-2xl" />
-                        <FaUserCircle className="cursor-pointer md:text-xl lg:text-2xl" />
+                        <abbr title="Youtube Studio">
+                            <BiSolidVideoPlus
+                                className="cursor-pointer md:text-xl lg:text-2xl"
+                                onClick={() => navigate("/studio")}
+                            />
+                        </abbr>
+                        <abbr title="Notification">
+                            <IoNotifications className="cursor-pointer md:text-xl lg:text-2xl" />
+                        </abbr>
+                        <abbr title="User">
+                            <FaUserCircle className="cursor-pointer md:text-xl lg:text-2xl" />
+                        </abbr>
                         <LogoutBtn />
                     </div>
                 ) : (
