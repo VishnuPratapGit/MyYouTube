@@ -6,17 +6,19 @@
 
 To run this project locally, follow these steps:
 
-1. **Create .env file and copy env.sample to that.**
-
-2. **Clone the Repository**
+1. **Clone the Repository**
    ```bash
-   git clone https://github.com/VishnuPratapGit/AccuKnox-Assignment
+   git clone https://github.com/VishnuPratapGit/MyYouTube.git
    ```
-3. **Install Dependencies**
+   
+2. **Create .env file and copy env.sample to that.**
+   
+4. **Install Dependencies**
    ```bash
    npm install
    ```
-4. **Run the Development Server**
+   
+5. **Run the Development Server**
    ```bash
    npm run dev
    ```
