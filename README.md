@@ -2,6 +2,8 @@
 
 **A modern and responsive YouTube clone with all the essential features to explore, watch, and share videos.** 
 
+---
+
 ## 🌐 Live Demo  
 Check out the live demo: [MyYouTube](https://sharemyyoutube.netlify.app/)  
 
