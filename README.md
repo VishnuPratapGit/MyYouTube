@@ -12,6 +12,7 @@ Check out the live demo: [MyYouTube](https://sharemyyoutube.netlify.app/)
 ## 📖 Features  
 
 ✨ **Explore Videos**: Seamlessly browse through a wide variety of videos.  
+✈️ **Upload and Manage**: Upload Videos and update, delete or change thumbnail og video.
 🎯 **Search Functionality**: Quickly find your favorite videos.  
 🌟 **Responsive Design**: Enjoy a flawless experience on any device.  
 ⚡ **High Performance**: Optimized for speed and efficiency.  
