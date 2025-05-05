@@ -133,7 +133,7 @@ class DatabaseServices {
     }
 
     getThumbnailPreview(fileId) {
-        return this.storage.getFilePreview(
+        return this.storage.getFileView(
             config.appwriteBucketId,
             fileId
         );
